@@ -10,22 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170525022403) do
+ActiveRecord::Schema.define(version: 20170525024535) do
 
   create_table "carts", force: :cascade do |t|
     t.string "user_id"
-    t.string "status"
+    t.integer "status", default: 0
     t.decimal "total", precision: 8, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "line_items", force: :cascade do |t|
-    t.string "product_id"
-    t.string "cart_id"
-    t.string "quantity"
+    t.integer "quantity"
+    t.integer "product_id"
+    t.integer "cart_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_line_items_on_cart_id"
+    t.index ["product_id"], name: "index_line_items_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -59,7 +61,7 @@ ActiveRecord::Schema.define(version: 20170525022403) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.string "role"
+    t.integer "role", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
